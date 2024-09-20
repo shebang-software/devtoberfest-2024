@@ -1,4 +1,4 @@
-using { metadata as external } from '../srv/external/metadata';
+using { beershop_admin as external } from '../srv/external/beershop-admin';
 
 namespace devtoberfest;
 
@@ -12,8 +12,8 @@ aspect ExtensionAspect {
   PersistedField                  : String;
 }
 
-extend external.Customers with ExtensionAspect;
+extend external.Beers with ExtensionAspect;
 
 entity CustomerExtensions : ExtensionAspect {
-  key CustomerID : String;
+  key ID : String;
 }

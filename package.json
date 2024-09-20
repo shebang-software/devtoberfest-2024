@@ -26,6 +26,16 @@
         "credentials": {
           "url": "https://services.odata.org/V4/Northwind/Northwind.svc"
         }
+      },
+      "beershop_admin": {
+        "kind": "odata",
+        "model": "srv/external/beershop-admin",
+        "credentials": {
+          "url": "http://localhost:4005/beershop-admin/",
+          "authentication": "BasicAuthentication",
+          "username":"alice",
+          "password":""
+        }
       }
     }
   }
