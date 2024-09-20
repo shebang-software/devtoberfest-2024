@@ -1,4 +1,4 @@
-# Detoberfest 2024 🍺- Extending your On-Premise OData Entities in CAP
+# Devtoberfest 2024 🍺- Extending your On-Premise OData Entities in CAP
 Extend the [Postgres Beershop](https://github.com/gregorwolf/pg-beershop) 🍺 service using an external CAP service. Shoutout to [Gregor Wolf](https://github.com/gregorwolf).  
 
 ![Node.js 18.18.0](https://img.shields.io/badge/Node.js-v18.18.0-green)
