@@ -20,13 +20,6 @@
   },
   "cds": {
     "requires": {
-      "metadata": {
-        "kind": "odata",
-        "model": "srv/external/metadata",
-        "credentials": {
-          "url": "https://services.odata.org/V4/Northwind/Northwind.svc"
-        }
-      },
       "beershop_admin": {
         "kind": "odata",
         "model": "srv/external/beershop-admin",
