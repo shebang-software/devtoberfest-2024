@@ -1,9 +1,9 @@
 {
   "name": "devtoberfest",
   "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
-  "license": "UNLICENSED",
+  "description": "Extending your On-Premise OData Entities in CAP",
+  "repository": "https://github.com/shebang-software/devtoberfest-2024",
+  "license": "beerware",
   "private": true,
   "dependencies": {
     "@sap-cloud-sdk/http-client": "^3.20.0",
