@@ -1,6 +1,6 @@
-using { metadata as external } from '../srv/external/metadata';
+using { beershop_admin as external } from '../srv/external/beershop-admin';
 
 @path: '/devtoberfest'
 service DevtoberService {
-  entity Customers as projection on external.Customers;
+  entity Beers as projection on external.Beers;
 }
