@@ -1,14 +1,10 @@
 const cds = require("@sap/cds");
 const fixExtension = require("./utils/extension");
-//const augmentEntity = require('./utils/warranty');
- //const { getCompleteSettings } = require('./utils/config');
-
-const bla = (l) => console.log(JSON.stringify(l, null, 2));
+const beerUtil = require("./utils/beers");
 
 module.exports = class DevtoberService extends cds.ApplicationService {
   async init() {
     const beers = await cds.connect.to("beershop_admin");
-    const entities = cds.entities("devtoberfest");
 
     // Get the original entity definition from the on-premise service. Because it's been extended, it will contain
     // the added fields from the extension aspect
@@ -22,6 +18,13 @@ module.exports = class DevtoberService extends cds.ApplicationService {
       (field) => !excludeFields.includes(field)
     );
 
+    /**
+     * Handles the "READ" event for the "Beers" entity.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} req.query - The query object from the request.
+     * @returns {Promise<Object>} The result of executing the query.
+     */
     this.on("READ", "Beers", async (req) => {
       // Clone the original query and remove the extension fields
       let modifiedQuery = fixExtension(req.query, excludeFields, validFields);
@@ -45,16 +48,38 @@ module.exports = class DevtoberService extends cds.ApplicationService {
 
       const data = await beers.run(qry);
 
-	  // Now add your virtual fields and custom extension data
-      data.map((d) => {
-        d.VirtualField = true;
-        d.PersistedField = "katan";
+      // !!!! Now add your virtual fields and custom extension data !!!!
+      const beerIds = data.map((beer) => beer.ID);
+      let beerExtensions = await SELECT.from("devtoberfest.BeerExtensions")
+        .columns((beer) => {
+          beer`.*`;
+        })
+        .where({ ID: { in: beerIds } });
+
+      data.map(async (d) => {
+        const beerExtension = beerExtensions.find((e) => e.ID === d.ID);
+        if (beerExtension) {
+          d.strength = await beerUtil.determineStrength(d.abv);
+          d.style = beerExtension.style;
+          d.about = beerExtension.about;
+        }
         return d;
       });
 
       return data;
     });
-    ///this has to be LAST.
+
+    /**
+     * Handles all incoming requests for any event and any entity.
+     * (This has to be last!!!)
+     *
+     * @param {string} event - The event name.
+     * @param {string} entity - The entity name.
+     * @param {Function} handler - The handler function to process the request.
+     * @param {Object} handler.req - The request object.
+     * @param {Object} handler.req.query - The query object from the request.
+     * @returns {Promise<Object>} The result of executing the query.
+     */
     this.on("*", "*", async (req) => {
       return beers.run(req.query);
     });
