@@ -49,23 +49,107 @@ module.exports = class DevtoberService extends cds.ApplicationService {
       const data = await beers.run(qry);
 
       // !!!! Now add your virtual fields and custom extension data !!!!
-      const beerIds = data.map((beer) => beer.ID);
-      let beerExtensions = await SELECT.from("devtoberfest.BeerExtensions")
-        .columns((beer) => {
-          beer`.*`;
-        })
-        .where({ ID: { in: beerIds } });
+      if (Array.isArray(data)) {
+        const beerIds = data.map((beer) => beer.ID);
+        let beerExtensions = await SELECT.from("devtoberfest.BeerExtensions")
+          .columns((beer) => {
+            beer`.*`;
+          })
+          .where({ ID: { in: beerIds } });
 
-      data.map(async (d) => {
-        const beerExtension = beerExtensions.find((e) => e.ID === d.ID);
+        data.map(async (d) => {
+          const beerExtension = beerExtensions.find((e) => e.ID === d.ID);
+          if (beerExtension) {
+            d.strength = await beerUtil.determineStrength(d.abv);
+            d.style = beerExtension.style;
+            d.about = beerExtension.about;
+          }
+          return d;
+        });
+      } else {
+        const beerExtension = await SELECT.one
+          .from("devtoberfest.BeerExtensions")
+          .columns((beer) => {
+            beer`.*`;
+          })
+          .where({ ID: data.ID });
         if (beerExtension) {
-          d.strength = await beerUtil.determineStrength(d.abv);
-          d.style = beerExtension.style;
-          d.about = beerExtension.about;
+          data.strength = await beerUtil.determineStrength(data.abv);
+          data.style = beerExtension.style;
+          data.about = beerExtension.about;
         }
-        return d;
+      }
+
+      return data;
+    });
+
+    /**
+     * Handles the "CREATE" event for the "Beers" entity.
+     * Clones the original query, removes extension fields, and persists custom extension data.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} req.query - The query object containing the data to be inserted.
+     * @returns {Promise<Object>} The result of the query execution.
+     */
+    this.on("CREATE", "Beers", async (req) => {
+      // Clone the original query and remove the extension fields
+      // from the entities that are being created
+      let qry = fixExtension(req.query, excludeFields, validFields);
+
+      const data = await beers.run(qry);
+
+      // Now persist the custom extension data
+      const beerExtensions = req.query.INSERT.entries.map((beer) => {
+        return {
+          ID: beer.ID,
+          style: beer.style,
+          about: beer.about,
+        };
       });
 
+      await INSERT.into("devtoberfest.BeerExtensions").entries(beerExtensions);
+
+      // Update the data object with the properties from the extension entity
+      Object.assign(data, beerExtensions);
+
+      return data;
+    });
+
+    /**
+     * Handles the "UPDATE" event for the "Beers" entity.
+     * Clones the original query, removes extension fields, and persists custom extension data.
+     *
+     * @param {Object} req - The request object.
+     * @param {Object} req.query - The query object containing the data to be updated.
+     * @returns {Promise<Object>} The result of the query execution.
+     */
+    this.on("UPDATE", "Beers", async (req) => {
+      // Clone the original query and remove the extension fields
+      // from the entities that are being updated
+      let qry = fixExtension(req.query, excludeFields, validFields);
+
+      const data = await beers.run(qry);
+
+      // Now persist the custom extension data
+      const updateData = req.query.UPDATE.data;
+      const beerExtension = {};
+      if (updateData.style !== undefined)
+        beerExtension.style = updateData.style;
+      if (updateData.about !== undefined)
+        beerExtension.about = updateData.about;
+      await UPDATE("devtoberfest.BeerExtensions")
+        .with(beerExtension)
+        .where({ ID: updateData.ID });
+
+      // Update the data object with the properties from the extension entity
+      Object.assign(data, beerExtension);
+
+      return data;
+    });
+
+    this.on("DELETE", "Beers", async (req) => {
+      const data = await beers.run(req.query);
+      await DELETE("devtoberfest.BeerExtensions").where(req.query.DELETE.from.ref[0].where);
       return data;
     });
 
