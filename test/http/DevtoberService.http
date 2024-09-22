@@ -2,56 +2,56 @@
 @auth = 
 
 
-### Beers
+### Read All Beers
 # @name Beers_GET
 GET {{server}}/devtoberfest/Beers
 {{auth}}
 
+### Read All Beers
+# @name Beers_GET
+GET {{server}}/devtoberfest/Beers/$count
+{{auth}}
 
-### Beers
+
+### Create New Beer
 # @name Beers_POST
 POST {{server}}/devtoberfest/Beers
 Content-Type: application/json
 {{auth}}
 
 {
-  "ID": "98910253-4f93-45d3-a54d-4f3506c6a79a",
-  "name": "name-9891025",
-  "abv": 83.4,
-  "ibu": 94,
-  "brewery": {
-    "ID": "19680982-3b8e-4642-9404-f75e17bb2304",
-    "IsActiveEntity": true
-  },
-  "brewery_ID": "98910251-cf6d-47b9-b482-11f4521c496f",
-  "style": "style-9891025",
-  "about": "about-9891025"
+  "ID": "8489fdc3-63c8-4f23-b352-4c2d853a131b",
+  "name": "Schwaben Bräu Meister Pils",
+  "abv": "4.9",
+  "ibu": 20,
+  "brewery_ID": "6832ba00-c20e-48b4-a685-dca4aff2ca13",
+  "style": "Pilsner - German",
+  "about": "known for its crisp and refreshing taste, featuring a balanced blend of light malt and hop bitterness. It pours a light golden color with a medium-sized white head that dissipates quickly. The aroma is subtle, with hints of lemony hops and a fresh, grassy character"
 }
 
 
-### Beers
+### Read New Beer
+# @name Beers_GET
+GET {{server}}/devtoberfest/Beers(8489fdc3-63c8-4f23-b352-4c2d853a131b)
+Content-Type: application/json
+{{auth}}
+
+
+### Update new beer
 # @name Beers_PATCH
-PATCH {{server}}/devtoberfest/Beers/98910253-4f93-45d3-a54d-4f3506c6a79a
+PATCH {{server}}/devtoberfest/Beers(8489fdc3-63c8-4f23-b352-4c2d853a131b)
 Content-Type: application/json
 {{auth}}
 
 {
-  "ID": "98910253-4f93-45d3-a54d-4f3506c6a79a",
-  "name": "name-9891025",
-  "abv": 83.4,
-  "ibu": 94,
-  "brewery": {
-    "ID": "19680982-3b8e-4642-9404-f75e17bb2304",
-    "IsActiveEntity": true
-  },
-  "brewery_ID": "98910251-cf6d-47b9-b482-11f4521c496f",
-  "style": "style-9891025",
-  "about": "about-9891025"
+    "ibu": 10,
+    "abv": "5.3",
+    "style": "Lager - German"
 }
 
 
-### Beers
+### Delete new beer
 # @name Beers_DELETE
-DELETE {{server}}/devtoberfest/Beers/98910253-4f93-45d3-a54d-4f3506c6a79a
+DELETE {{server}}/devtoberfest/Beers(8489fdc3-63c8-4f23-b352-4c2d853a131b)
 Content-Type: application/json
 {{auth}}
