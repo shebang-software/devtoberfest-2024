@@ -1,0 +1,57 @@
+@server = http://localhost:4004
+@auth = 
+
+
+### Beers
+# @name Beers_GET
+GET {{server}}/devtoberfest/Beers
+{{auth}}
+
+
+### Beers
+# @name Beers_POST
+POST {{server}}/devtoberfest/Beers
+Content-Type: application/json
+{{auth}}
+
+{
+  "ID": "98910253-4f93-45d3-a54d-4f3506c6a79a",
+  "name": "name-9891025",
+  "abv": 83.4,
+  "ibu": 94,
+  "brewery": {
+    "ID": "19680982-3b8e-4642-9404-f75e17bb2304",
+    "IsActiveEntity": true
+  },
+  "brewery_ID": "98910251-cf6d-47b9-b482-11f4521c496f",
+  "style": "style-9891025",
+  "about": "about-9891025"
+}
+
+
+### Beers
+# @name Beers_PATCH
+PATCH {{server}}/devtoberfest/Beers/98910253-4f93-45d3-a54d-4f3506c6a79a
+Content-Type: application/json
+{{auth}}
+
+{
+  "ID": "98910253-4f93-45d3-a54d-4f3506c6a79a",
+  "name": "name-9891025",
+  "abv": 83.4,
+  "ibu": 94,
+  "brewery": {
+    "ID": "19680982-3b8e-4642-9404-f75e17bb2304",
+    "IsActiveEntity": true
+  },
+  "brewery_ID": "98910251-cf6d-47b9-b482-11f4521c496f",
+  "style": "style-9891025",
+  "about": "about-9891025"
+}
+
+
+### Beers
+# @name Beers_DELETE
+DELETE {{server}}/devtoberfest/Beers/98910253-4f93-45d3-a54d-4f3506c6a79a
+Content-Type: application/json
+{{auth}}
