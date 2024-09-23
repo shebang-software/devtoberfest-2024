@@ -1,37 +1,38 @@
 # Cliff notes
 
-# Introduction (1m)
+# Introduction (Jorg, 1m)
 - Katan
 - Jorg
 
-# Use case (3m)
+# Use case (Jorg, 2m)
 - Story about partner portal without going into a tremendous amount of detail
 - Migrating apps custom services out of ECC or S/4
 - Change as little as possible. Changing services and Fiori apps is more work than just retrofitting the service
 
-# Why, and why this way? (2m)
+# Why, and why this way? (Jorg & Katan, 1m)
 - Side by side extendibility 
-- Clean Core, etc
+- Aligns with clean core
   - Keeps the old system intact
   - Allows us to start removing completely custom fields and logic out of ABAP
 - Faster iterations through CI/CD 
+- Reduced risk on SAP Core by isolating extensions
 
-# Demo & Code explanation
+# Demo & Code explanation (Jorg, 1m)
 - Open repo in browser 
 
-## Beershop
+## Beershop (3m)
 - Shout out to the beershop 
 - Run the beershop on port 4005
 - Open the beershop on port 4005, 
   - show the relevant beershop entity in CDS
   - Show what's in it via browser or http test
 
-## Devtoberfest extension
+## Devtoberfest extension (2m)
 - Show general CAP setup
 - Super quick overview of importing and integrating an external service
 - show package.json and CDS entries
 
-## Solution walkthrough 
+## Solution walkthrough (Katan, 15m+)
 - Show results of what we're building
 - Talk about the importance of having an aspect to reduce specifying fields everywhere
 - Show how the aspect creates both the extension and the persistence
@@ -46,7 +47,7 @@
   - Step by step, comment in bits of code and explain what they do 
 - GOT TIME LEFT AFTER READ? Do CREATE. Still time left? UPDATE
 
-# When to use, when not to use 
+# When to use, when not to use (Jorg & Katan, 2m)
 - Would I still take this approach if I didn't have to support large Fiori apps? 
   - Probably not, association should suffice 
 - Potential issues V2 to V4. While the CAP service can transform a V2 app into a V4 app, 
@@ -54,3 +55,4 @@ not all functionality can be guaranteed
 - ALTERNATIVE SOLUTION? Create an association, and normalize it with a view 
   - this changes the name of the entity
   - this means maintaining view fields 
+- any other waffle we can think off
