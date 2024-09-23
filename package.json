@@ -7,7 +7,7 @@
   "private": true,
   "dependencies": {
     "@sap-cloud-sdk/http-client": "^3.20.0",
-    "@sap-cloud-sdk/resilience": "^3.20.0",
+    "@sap-cloud-sdk/resilience": "^3.21.0",
     "@sap/cds": "^8",
     "express": "^4"
   },
@@ -26,8 +26,8 @@
         "credentials": {
           "url": "http://localhost:4005/beershop-admin/",
           "authentication": "BasicAuthentication",
-          "username":"alice",
-          "password":""
+          "username": "alice",
+          "password": ""
         }
       }
     }
