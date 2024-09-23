@@ -1,24 +1,23 @@
 # Cliff notes
 
-# Introduction
+# Introduction (1m)
 - Katan
 - Jorg
 
-# Use case
+# Use case (3m)
+- Story about partner portal without going into a tremendous amount of detail
 - Migrating apps custom services out of ECC or S/4
 - Change as little as possible. Changing services and Fiori apps is more work than just retrofitting the service
 
-# Why, and why this way?
-- Extendibility 
+# Why, and why this way? (2m)
+- Side by side extendibility 
 - Clean Core, etc
-  - Allows us to start dragging completely custom fields and logic out of ABAP
+  - Keeps the old system intact
+  - Allows us to start removing completely custom fields and logic out of ABAP
 - Faster iterations through CI/CD 
 
-# Setup, Repo etc
-- links to repo 
-- 
-
 # Demo & Code explanation
+- Open repo in browser 
 
 ## Beershop
 - Shout out to the beershop 
@@ -39,7 +38,7 @@
 - Comment out the handlers.
 - Show the errors that show up simply passing the new entity along 
   - `field does not exist` error
-- Walk through the handler. Put `console.log` messages all over the place 
+- Walk through the handler. Put `console.log` messages all over the place. Preferably on the fly, for some interactivity
   - Show the SELECT object
   - Show the contents of the aspect in code
   - Show the contents of the remote entity in code
