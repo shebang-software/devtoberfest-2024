@@ -22,7 +22,7 @@
 
 ## Beershop (3m)
 - Shout out to the beershop 
-- Run the beershop on port 4005
+- Run the beershop on port 400
 - Open the beershop on port 4005, 
   - show the relevant beershop entity in CDS
   - Show what's in it via browser or http test
